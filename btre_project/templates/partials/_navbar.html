@@ -33,6 +33,24 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item mr-3
+                {% if 'dashboard' in request.path %}
+                active
+                {% endif %}">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        Welcome {{user.username }} - Dashboard</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>Logout
+                    </a>
+                    <form action="{% url 'logout' %}" id="logout" method="post">
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+                </li>
+                {% else %}
                 <li class="nav-item mr-3
                 {% if 'register' in request.path %}
                 active
@@ -49,6 +67,7 @@
 
                         Login</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
